@@ -1,0 +1,15 @@
+# Development server
+# docker build -t dashboard .
+# docker run --name bo_dashboard -it -p 3000:3000 dashboard
+
+FROM node:10.16.3 as builder
+
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+COPY package.json /usr/src/app/package.json
+RUN yarn install --silent
+RUN yarn global add react-scripts@3.2.0 --silent
+
+COPY . /usr/src/app
+CMD ["yarn", "start"]
